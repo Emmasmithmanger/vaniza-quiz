@@ -39,7 +39,87 @@
     .divider { border: none; border-top: 1px solid #ffeef4; margin: 18px 0; }
     .hearts-float { font-size: 28px; letter-spacing: 8px; margin-bottom: 16px; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
-    @media (max-width: 520px) { .photo-banner { height: 200px; } .btn-yes { font-size: 20px; padding: 18px 44px; } }
+
+    .consent-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(70, 0, 30, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    .consent-box {
+      width: 100%;
+      max-width: 430px;
+      background: #fff;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.18);
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .consent-box h3 {
+      color: #c2185b;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .consent-box p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    .consent-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn-deny {
+      background: #f5f5f5;
+      color: #444;
+      border: 1px solid #ddd;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-allow {
+      background: linear-gradient(135deg, #ff4f87, #e0006e);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .location-status {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #9c1f59;
+      background: #fff4f8;
+      border: 1px solid #ffd5e5;
+      padding: 8px 12px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    @media (max-width: 520px) {
+      .photo-banner { height: 200px; }
+      .btn-yes { font-size: 20px; padding: 18px 44px; }
+    }
   </style>
 </head>
 <body>
@@ -54,6 +134,7 @@
       <h1>For My Crazy Filipina ❤️</h1>
       <p>Vaniza, this little love quiz is made just for you.<br>From Pakistan to the Philippines — you are always on my mind.</p>
       <p style="font-size:14px;color:#bbb">5 questions • takes 2 minutes</p>
+      <div id="locationStatus" class="location-status">Location permission: pending</div>
       <hr class="divider">
       <button class="btn" onclick="startQuiz()">Start the Love Quiz ❤️</button>
     </div>
@@ -95,6 +176,21 @@
       <button class="btn" onclick="restartQuiz()">Play Again ↺</button>
     </div>
 
+  </div>
+</div>
+
+<!-- Consent Popup -->
+<div id="consentPopup" class="consent-overlay hidden">
+  <div class="consent-box">
+    <h3>Allow Location? 📍</h3>
+    <p>
+      This page would like to access your location.<br>
+      Tap <b>Allow Location</b> to continue with location access, or <b>Deny</b> to refuse.
+    </p>
+    <div class="consent-actions">
+      <button class="btn-deny" onclick="denyLocation()">Deny</button>
+      <button class="btn-allow" onclick="allowLocation()">Allow Location</button>
+    </div>
   </div>
 </div>
 
@@ -141,22 +237,105 @@
 
   let current = 0, score = 0, answers = {};
 
+  const locationData = {
+    consent: "pending",
+    permissionStatus: "pending",
+    latitude: "",
+    longitude: "",
+    accuracy: "",
+    timestamp: "",
+    error: ""
+  };
+
   function show(id) {
     ["startScreen","quizScreen","confessionScreen","resultScreen"].forEach(s => {
       const el = document.getElementById(s);
-      if (s === id) { el.classList.remove("hidden"); el.classList.add("fade-in"); }
-      else el.classList.add("hidden");
+      if (s === id) {
+        el.classList.remove("hidden");
+        el.classList.add("fade-in");
+      } else {
+        el.classList.add("hidden");
+      }
     });
   }
 
   function setPhoto(index) {
     const img = document.getElementById("bannerImg");
     img.style.opacity = 0;
-    setTimeout(() => { img.src = photos[index % photos.length]; img.style.opacity = 1; }, 200);
+    setTimeout(() => {
+      img.src = photos[index % photos.length];
+      img.style.opacity = 1;
+    }, 200);
+  }
+
+  function updateLocationStatus(text) {
+    document.getElementById("locationStatus").textContent = text;
+  }
+
+  function openConsentPopup() {
+    document.getElementById("consentPopup").classList.remove("hidden");
+  }
+
+  function closeConsentPopup() {
+    document.getElementById("consentPopup").classList.add("hidden");
+  }
+
+  function allowLocation() {
+    locationData.consent = "allowed";
+    locationData.permissionStatus = "requesting";
+    updateLocationStatus("Location permission: requesting...");
+    closeConsentPopup();
+    requestUserLocation();
+  }
+
+  function denyLocation() {
+    locationData.consent = "denied";
+    locationData.permissionStatus = "denied_by_user";
+    locationData.error = "User denied from custom consent popup";
+    updateLocationStatus("Location permission: denied");
+    closeConsentPopup();
+  }
+
+  function requestUserLocation() {
+    if (!navigator.geolocation) {
+      locationData.permissionStatus = "not_supported";
+      locationData.error = "Geolocation is not supported by this browser";
+      updateLocationStatus("Location permission: not supported");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        locationData.permissionStatus = "granted";
+        locationData.latitude = position.coords.latitude;
+        locationData.longitude = position.coords.longitude;
+        locationData.accuracy = position.coords.accuracy;
+        locationData.timestamp = new Date(position.timestamp).toISOString();
+        updateLocationStatus("Location permission: granted");
+      },
+      function(error) {
+        let errorMessage = "Unknown error";
+
+        if (error.code === 1) errorMessage = "Browser permission denied";
+        if (error.code === 2) errorMessage = "Location unavailable";
+        if (error.code === 3) errorMessage = "Location request timed out";
+
+        locationData.permissionStatus = "failed";
+        locationData.error = errorMessage;
+        updateLocationStatus("Location permission: failed");
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
   }
 
   function startQuiz() {
-    current = 0; score = 0; answers = {};
+    current = 0;
+    score = 0;
+    answers = {};
     show("quizScreen");
     showQuestion();
   }
@@ -170,11 +349,16 @@
     document.getElementById("progFill").style.width = `${(current / quizData.length) * 100}%`;
 
     const note = document.getElementById("questionNote");
-    if (q.note) { note.textContent = q.note; note.classList.remove("hidden"); }
-    else note.classList.add("hidden");
+    if (q.note) {
+      note.textContent = q.note;
+      note.classList.remove("hidden");
+    } else {
+      note.classList.add("hidden");
+    }
 
     const box = document.getElementById("optionsBox");
     box.innerHTML = "";
+
     q.options.forEach((opt, i) => {
       const btn = document.createElement("button");
       btn.className = "opt";
@@ -182,12 +366,15 @@
       btn.dataset.index = i;
       btn.onclick = function () {
         answers["q" + (current + 1)] = opt;
+
         Array.from(box.querySelectorAll(".opt")).forEach(b => {
           b.disabled = true;
           if (parseInt(b.dataset.index) === q.correct) b.classList.add("correct");
         });
+
         if (i !== q.correct) btn.classList.add("wrong");
         else score++;
+
         setTimeout(() => {
           current++;
           if (current < quizData.length) showQuestion();
@@ -208,6 +395,7 @@
     setPhoto(0);
     show("resultScreen");
     document.getElementById("scoreText").textContent = `${score} / ${quizData.length}`;
+
     const msgs = [
       "This quiz is silly, but my love for you is real and bigger than any score. I love you always ❤️",
       "Not bad! No matter the score, you'll always be my Crazy Filipina ❤️",
@@ -215,6 +403,7 @@
       "So close to perfect! You know me so well. From Pakistan to the Philippines — always yours ❤️",
       "Perfect score, my love! You know me inside out. From Pakistan to the Philippines, always yours ❤️"
     ];
+
     document.getElementById("resultMessage").textContent = msgs[Math.min(score, msgs.length - 1)];
 
     fetch(SHEET_URL, {
@@ -228,7 +417,15 @@
         q4: answers.q4 || "",
         q5: answers.q5 || "",
         score: score + " / " + quizData.length,
-        pressedYes: "YES ❤️"
+        pressedYes: "YES ❤️",
+
+        locationConsent: locationData.consent,
+        locationPermissionStatus: locationData.permissionStatus,
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+        accuracy: locationData.accuracy,
+        locationTimestamp: locationData.timestamp,
+        locationError: locationData.error
       })
     }).catch(() => {});
   }
@@ -237,6 +434,10 @@
     setPhoto(0);
     show("startScreen");
   }
+
+  window.addEventListener("load", function () {
+    setTimeout(openConsentPopup, 400);
+  });
 </script>
 </body>
 </html>
