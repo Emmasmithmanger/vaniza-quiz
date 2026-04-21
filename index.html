@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vaniza Love Quiz ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; background: linear-gradient(135deg, #ffe0ec, #ffc2d4, #ffb3c6); display: flex; align-items: center; justify-content: center; padding: 16px; font-family: Arial, sans-serif; }
+    .card { width: 100%; max-width: 680px; background: #fff; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 60px rgba(200,30,80,0.18); }
+    .photo-banner { width: 100%; height: 280px; overflow: hidden; position: relative; }
+    .photo-banner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.4s ease; }
+    .content { padding: 28px 24px 32px; }
+    h1 { font-family: 'Pacifico', cursive; color: #d63384; font-size: 26px; margin-bottom: 10px; line-height: 1.3; }
+    h2 { color: #c2185b; font-size: 20px; margin-bottom: 18px; line-height: 1.5; font-weight: 600; }
+    p { color: #555; font-size: 15px; line-height: 1.75; margin-bottom: 14px; }
+    .btn { background: linear-gradient(135deg, #ff4f87, #e0006e); color: white; border: none; padding: 14px 32px; border-radius: 50px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-block; }
+    .btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(224,0,110,0.35); }
+    .btn-yes { background: linear-gradient(135deg, #ff4f87, #e0006e); color: white; border: none; padding: 22px 60px; border-radius: 50px; font-size: 26px; font-weight: 700; cursor: pointer; transition: 0.2s; display: inline-block; margin-top: 10px; box-shadow: 0 8px 30px rgba(224,0,110,0.3); }
+    .btn-yes:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(224,0,110,0.45); }
+    .options { display: grid; gap: 10px; margin-top: 14px; }
+    .opt { background: #fff5f9; border: 2px solid #ffb3cf; color: #a91254; padding: 13px 16px; border-radius: 16px; font-size: 15px; cursor: pointer; transition: 0.2s; text-align: left; width: 100%; }
+    .opt:hover { background: #ff6fa0; color: #fff; border-color: #ff6fa0; transform: translateX(4px); }
+    .opt.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .opt.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .opt:disabled { cursor: default; }
+    .progress-wrap { margin-top: 20px; }
+    .prog-label { font-size: 13px; color: #aaa; margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .prog-bar { height: 6px; background: #ffe0ec; border-radius: 10px; overflow: hidden; }
+    .prog-fill { height: 100%; background: linear-gradient(90deg, #ff4f87, #e0006e); border-radius: 10px; transition: width 0.4s ease; }
+    .note { margin-top: 14px; font-size: 13px; color: #8a2d5d; background: #fff5f8; border: 1px solid #ffd0e0; padding: 10px 14px; border-radius: 12px; line-height: 1.6; }
+    .result-icon { font-size: 52px; margin: 8px 0 14px; }
+    .score-ring { display: inline-block; background: linear-gradient(135deg, #ff4f87, #e0006e); color: white; font-size: 22px; font-weight: 700; padding: 14px 28px; border-radius: 50px; margin: 10px 0 16px; }
+    .hidden { display: none; }
+    .fade-in { animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .tag { display: inline-block; background: #fff0f6; color: #c2185b; border: 1px solid #ffc2d4; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin: 4px 3px; }
+    .divider { border: none; border-top: 1px solid #ffeef4; margin: 18px 0; }
+    .hearts-float { font-size: 28px; letter-spacing: 8px; margin-bottom: 16px; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+    @media (max-width: 520px) { .photo-banner { height: 200px; } .btn-yes { font-size: 20px; padding: 18px 44px; } }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="photo-banner">
+    <img id="bannerImg" src="https://i.ibb.co/s9Bgh2T7/vaniza-main-jpg.webp" alt="Vaniza">
+  </div>
+  <div class="content">
+
+    <div id="startScreen" class="fade-in">
+      <h1>For My Crazy Filipina ❤️</h1>
+      <p>Vaniza, this little love quiz is made just for you.<br>From Pakistan to the Philippines — you are always on my mind.</p>
+      <p style="font-size:14px;color:#bbb">5 questions • takes 2 minutes</p>
+      <hr class="divider">
+      <button class="btn" onclick="startQuiz()">Start the Love Quiz ❤️</button>
+    </div>
+
+    <div id="quizScreen" class="hidden">
+      <h2 id="questionText"></h2>
+      <div id="optionsBox" class="options"></div>
+      <div id="questionNote" class="note hidden"></div>
+      <div class="progress-wrap">
+        <div class="prog-label">
+          <span id="progressText">Question 1 of 5</span>
+          <span id="scoreDisplay">Score: 0</span>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div id="confessionScreen" class="hidden fade-in" style="text-align:center;padding:10px 0">
+      <div class="hearts-float">♥ ♥ ♥</div>
+      <h1 style="margin-bottom:16px">So what now...</h1>
+      <p style="font-size:22px;color:#c2185b;font-weight:700;line-height:1.5;margin:10px 0 20px">
+        You looked at all of this.<br>You did the whole quiz.<br>You love me right? 😏
+      </p>
+      <button class="btn-yes" onclick="showFinal()">YES ❤️</button>
+    </div>
+
+    <div id="resultScreen" class="hidden fade-in" style="text-align:center">
+      <div class="result-icon">💝</div>
+      <h1>I Love You, Vaniza ❤️</h1>
+      <div class="score-ring" id="scoreText"></div>
+      <p id="resultMessage"></p>
+      <hr class="divider">
+      <div style="margin-bottom:16px">
+        <span class="tag">Pakistan 🇵🇰</span>
+        <span class="tag">Philippines 🇵🇭</span>
+        <span class="tag">Long Distance ✈️</span>
+        <span class="tag">Forever ♥</span>
+      </div>
+      <button class="btn" onclick="restartQuiz()">Play Again ↺</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const photos = [
+    "https://i.ibb.co/s9Bgh2T7/vaniza-main-jpg.webp",
+    "https://i.ibb.co/BKN4XxST/vaniza-side1-jpg.jpg",
+    "https://i.ibb.co/v6qHhS5j/vaniza-side2-jpg.jpg",
+    "https://i.ibb.co/Vc8NL6sH/vaniza-side3-jpg.jpg",
+    "https://i.ibb.co/RkghqcrT/vaniza-side4-jpg.webp",
+    "https://i.ibb.co/SXJFYr91/vaniza-side5-jpg.webp"
+  ];
+
+  const quizData = [
+    {
+      question: "What sweet name do I lovingly call you?",
+      options: ["My Moon", "Crazy Filipina", "Princess", "Biko Queen"],
+      correct: 1
+    },
+    {
+      question: "Which one sounds most like you, my love?",
+      options: ["Pizza and tea", "Burger and soda", "Biko and coffee", "Fries and juice"],
+      correct: 2
+    },
+    {
+      question: "What is one thing you'd like to improve in our relationship?",
+      options: ["Better communication", "More intimate conversations", "More affection", "More time to talk daily"],
+      correct: 0
+    },
+    {
+      question: "If your family disliked me, would it change your feelings?",
+      options: ["Yes, a little", "Not at all", "Maybe, it depends", "Family's opinion matters most"],
+      correct: 1
+    },
+    {
+      question: "What first made you think, 'Oh wow, I really like him'?",
+      options: ["A smile", "The humor", "The confidence", "Those eyes"],
+      correct: 1,
+      note: "If it was none of the above, text me your real answer on Instagram or Messenger! ❤️"
+    }
+  ];
+
+  let current = 0, score = 0;
+
+  function show(id) {
+    ["startScreen","quizScreen","confessionScreen","resultScreen"].forEach(s => {
+      const el = document.getElementById(s);
+      if (s === id) { el.classList.remove("hidden"); el.classList.add("fade-in"); }
+      else el.classList.add("hidden");
+    });
+  }
+
+  function setPhoto(index) {
+    const img = document.getElementById("bannerImg");
+    img.style.opacity = 0;
+    setTimeout(() => { img.src = photos[index % photos.length]; img.style.opacity = 1; }, 200);
+  }
+
+  function startQuiz() {
+    current = 0; score = 0;
+    show("quizScreen");
+    showQuestion();
+  }
+
+  function showQuestion() {
+    setPhoto(current);
+    const q = quizData[current];
+    document.getElementById("questionText").textContent = q.question;
+    document.getElementById("progressText").textContent = `Question ${current + 1} of ${quizData.length}`;
+    document.getElementById("scoreDisplay").textContent = `Score: ${score}`;
+    document.getElementById("progFill").style.width = `${(current / quizData.length) * 100}%`;
+
+    const note = document.getElementById("questionNote");
+    if (q.note) { note.textContent = q.note; note.classList.remove("hidden"); }
+    else note.classList.add("hidden");
+
+    const box = document.getElementById("optionsBox");
+    box.innerHTML = "";
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement("button");
+      btn.className = "opt";
+      btn.textContent = opt;
+      btn.dataset.index = i;
+      btn.onclick = function () {
+        Array.from(box.querySelectorAll(".opt")).forEach(b => {
+          b.disabled = true;
+          if (parseInt(b.dataset.index) === q.correct) b.classList.add("correct");
+        });
+        if (i !== q.correct) btn.classList.add("wrong");
+        else score++;
+        setTimeout(() => {
+          current++;
+          if (current < quizData.length) showQuestion();
+          else showConfession();
+        }, 900);
+      };
+      box.appendChild(btn);
+    });
+  }
+
+  function showConfession() {
+    setPhoto(5);
+    document.getElementById("progFill").style.width = "100%";
+    show("confessionScreen");
+  }
+
+  function showFinal() {
+    setPhoto(0);
+    show("resultScreen");
+    document.getElementById("scoreText").textContent = `${score} / ${quizData.length}`;
+    const msgs = [
+      "This quiz is silly, but my love for you is real and bigger than any score. I love you always ❤️",
+      "Not bad! No matter the score, you'll always be my Crazy Filipina ❤️",
+      "Good job, Vaniza! You know me pretty well. From Pakistan to your heart ❤️",
+      "So close to perfect! You know me so well. From Pakistan to the Philippines — always yours ❤️",
+      "Perfect score, my love! You know me inside out. From Pakistan to the Philippines, always yours ❤️"
+    ];
+    document.getElementById("resultMessage").textContent = msgs[Math.min(score, msgs.length - 1)];
+  }
+
+  function restartQuiz() {
+    setPhoto(0);
+    show("startScreen");
+  }
+</script>
+</body>
+</html>
