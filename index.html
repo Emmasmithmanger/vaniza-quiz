@@ -6,6 +6,10 @@
   <title>Vaniza Love Quiz ❤️</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* ============================================================
+       COLORS — search "COLORS" to change the pink theme
+       Change the hex values to any color you like
+    ============================================================ */
     :root {
       --pink-1: #ffe0ec; --pink-2: #ffc2d4; --pink-3: #ffb3c6;
       --pink-4: #ff6fa0; --pink-5: #e0006e; --pink-6: #c2185b;
@@ -307,26 +311,44 @@
   <div class="confetti-layer" id="confettiLayer"></div>
 
   <div class="card" id="mainCard">
+
+    <!-- ============================================================
+         PHOTO BANNER — search "PHOTO BANNER" to change the top image
+         Change the src="..." to any image URL you want
+    ============================================================ -->
     <div class="photo-banner">
       <div class="badge-love">Made with love ✨</div>
+      <!-- MAIN PHOTO — this is the first photo shown on the start screen -->
       <img id="bannerImg" src="https://i.ibb.co/s9Bgh2T7/vaniza-main-jpg.webp" alt="Vaniza">
     </div>
 
     <div class="content">
 
-      <!-- CONSENT SCREEN -->
+      <!-- ============================================================
+           CONSENT SCREEN — search "CONSENT SCREEN TEXT" to edit this page
+           This is the first page asking for name, email and location
+      ============================================================ -->
       <div id="consentScreen" class="fade-in">
         <div class="mini-caption">💌 Special private quiz</div>
+
+        <!-- CONSENT TITLE — change the heading here -->
         <h1>Before We Start ❤️</h1>
+
+        <!-- CONSENT SUBTITLE — change this paragraph -->
         <p>This quiz was made just for you, Vaniza. To continue, I need a few small things from you:</p>
+
+        <!-- CONSENT BOX TEXT — edit the bullet points here -->
         <div class="consent-box">
-          <p>👤 <strong>Your name</strong> — so I know it's really you</p>
           <p>📧 <strong>Your email address</strong> — to keep it personal</p>
+          <p>👤 <strong>Your name</strong> — so I know it's really you</p>
           <p>📍 <strong>Your location</strong> — just to know you're safe, my love</p>
           <p style="margin-top:8px;font-size:12px;color:#bbb">Your info is only seen by me and stored privately. By continuing you agree to share this.</p>
         </div>
-        <input type="text" id="nameInput" class="input-field" placeholder="Enter your name 👤" />
+
+        <!-- INPUT FIELDS — email is first, then name -->
         <input type="email" id="emailInput" class="input-field" placeholder="Enter your email address 📧" />
+        <input type="text" id="nameInput" class="input-field" placeholder="Enter your name 👤" />
+
         <div id="locationStatus" class="location-status loc-waiting hidden">
           📍 Waiting for location...
         </div>
@@ -336,7 +358,10 @@
         <p style="font-size:12px;color:#ccc;text-align:center">You must fill all fields and allow location to proceed</p>
       </div>
 
-      <!-- DENIED SCREEN -->
+      <!-- ============================================================
+           DENIED SCREEN — search "DENIED SCREEN" to edit this page
+           This shows when user refuses to give location
+      ============================================================ -->
       <div id="deniedScreen" class="hidden denied-screen">
         <div class="icon">🚫</div>
         <h2 style="color:#dc3545;margin-bottom:12px">Access Denied</h2>
@@ -344,17 +369,24 @@
         <button class="btn" style="margin-top:16px" onclick="resetConsent()">Try Again</button>
       </div>
 
-      <!-- START SCREEN -->
+      <!-- ============================================================
+           START SCREEN — search "START SCREEN TEXT" to edit this page
+           This is the welcome page before the quiz begins
+      ============================================================ -->
       <div id="startScreen" class="hidden">
         <div class="mini-caption">💕 5 cute questions</div>
+
+        <!-- START TITLE — change the main heading -->
         <h1>For My Crazy Filipina ❤️</h1>
+
+        <!-- START MESSAGE — change the welcome message -->
         <p>Vaniza, this little love quiz is made just for you.<br>From Pakistan to the Philippines — you are always on my mind.</p>
         <p style="font-size:14px;color:#bbb">5 questions • takes 2 minutes</p>
         <hr class="divider">
         <button class="btn" onclick="startQuiz()">Start the Love Quiz ❤️</button>
       </div>
 
-      <!-- QUIZ SCREEN -->
+      <!-- QUIZ SCREEN — this is auto-generated from the questions below, don't edit here -->
       <div id="quizScreen" class="hidden">
         <div class="mini-caption">✨ Love meter in progress</div>
         <h2 id="questionText"></h2>
@@ -369,23 +401,40 @@
         </div>
       </div>
 
-      <!-- CONFESSION SCREEN -->
+      <!-- ============================================================
+           CONFESSION SCREEN — search "CONFESSION SCREEN TEXT" to edit
+           This is the "You love me right?" page after the last question
+      ============================================================ -->
       <div id="confessionScreen" class="hidden fade-in screen-center" style="padding:10px 0">
         <div class="hearts-float">♥ ♥ ♥</div>
+
+        <!-- CONFESSION TITLE — change this heading -->
         <h1 style="margin-bottom:16px">So what now...</h1>
+
+        <!-- CONFESSION MESSAGE — change this text -->
         <p style="font-size:22px;color:#c2185b;font-weight:700;line-height:1.5;margin:10px 0 20px">
           You looked at all of this.<br>You did the whole quiz.<br>You love me right? 😏
         </p>
+
+        <!-- CONFESSION BUTTON — change the button text -->
         <button class="btn-yes" onclick="showFinal()">YES ❤️</button>
       </div>
 
-      <!-- RESULT SCREEN -->
+      <!-- ============================================================
+           RESULT SCREEN — search "RESULT SCREEN TEXT" to edit this page
+           This is the final page after pressing YES
+      ============================================================ -->
       <div id="resultScreen" class="hidden fade-in screen-center">
         <div class="result-icon">💝</div>
+
+        <!-- RESULT TITLE — change this heading -->
         <h1>I Love You, Vaniza ❤️</h1>
+
         <div class="score-ring" id="scoreText"></div>
         <p id="resultMessage"></p>
         <hr class="divider">
+
+        <!-- RESULT TAGS — add or remove the little tag badges here -->
         <div style="margin-bottom:16px">
           <span class="tag">Pakistan 🇵🇰</span>
           <span class="tag">Philippines 🇵🇭</span>
@@ -399,37 +448,159 @@
   </div>
 
 <script>
+
+  /* ============================================================
+     GOOGLE FORM SETUP — search "GOOGLE FORM SETUP" to change this
+     Do not change these unless you create a new Google Form
+  ============================================================ */
   const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSdjxVqPa96w6yynxn5ZkZP3jlRtH47bPEhZKZ2EIWzejAEm8A/formResponse";
   const FIELDS = {
-    q1:         "entry.388839782",
-    q2:         "entry.283423256",
-    q3:         "entry.1977006129",
-    q4:         "entry.1485672265",
-    q5:         "entry.291619209",
-    score:      "entry.271714387",
-    pressedYes: "entry.1426266602",
-    name:       "entry.1463855130",
-    email:      "entry.2042978010",
-    location:   "entry.435732199"
+    q1:         "entry.388839782",   // Question 1 answer
+    q2:         "entry.283423256",   // Question 2 answer
+    q3:         "entry.1977006129",  // Question 3 answer
+    q4:         "entry.1485672265",  // Question 4 answer
+    q5:         "entry.291619209",   // Question 5 answer
+    score:      "entry.271714387",   // Final score
+    pressedYes: "entry.1426266602",  // Whether they pressed YES
+    email:      "entry.2042978010",  // User email
+    name:       "entry.1463855130",  // User name
+    location:   "entry.435732199"    // User location
   };
 
+  /* ============================================================
+     PHOTOS — search "PHOTOS" to change the images
+     Each photo shows on a different question (photo 1 = question 1, etc.)
+     Replace any URL with your own image URL
+     You can add more photos by adding more lines like:
+     "https://your-image-url-here.jpg",
+  ============================================================ */
   const photos = [
-    "https://i.ibb.co/s9Bgh2T7/vaniza-main-jpg.webp",
-    "https://i.ibb.co/BKN4XxST/vaniza-side1-jpg.jpg",
-    "https://i.ibb.co/v6qHhS5j/vaniza-side2-jpg.jpg",
-    "https://i.ibb.co/Vc8NL6sH/vaniza-side3-jpg.jpg",
-    "https://i.ibb.co/RkghqcrT/vaniza-side4-jpg.webp",
-    "https://i.ibb.co/SXJFYr91/vaniza-side5-jpg.webp"
+    "https://i.ibb.co/s9Bgh2T7/vaniza-main-jpg.webp",   // Photo 1 — Question 1
+    "https://i.ibb.co/BKN4XxST/vaniza-side1-jpg.jpg",   // Photo 2 — Question 2
+    "https://i.ibb.co/v6qHhS5j/vaniza-side2-jpg.jpg",   // Photo 3 — Question 3
+    "https://i.ibb.co/Vc8NL6sH/vaniza-side3-jpg.jpg",   // Photo 4 — Question 4
+    "https://i.ibb.co/RkghqcrT/vaniza-side4-jpg.webp",  // Photo 5 — Question 5
+    "https://i.ibb.co/SXJFYr91/vaniza-side5-jpg.webp"   // Photo 6 — Confession screen
   ];
 
+  /* ============================================================
+     QUESTIONS — search "QUESTIONS" to add, remove or edit questions
+
+     HOW TO EDIT A QUESTION:
+     - Change the text inside question: "..."
+     - Change the answer choices inside options: [...]
+     - Change correct: NUMBER to match the correct answer
+       (0 = first option, 1 = second option, 2 = third, 3 = fourth)
+
+     HOW TO ADD A NEW QUESTION:
+     - Copy one full block from { to },
+     - Paste it after the last question
+     - Edit the question, options, and correct number
+     - Also add a new entry ID in FIELDS above (q6, q7, etc.)
+
+     HOW TO REMOVE A QUESTION:
+     - Delete the full block from { to },
+     - Make sure the last question has no comma after }
+
+     NOTE: The "note" field is optional — only add it if you want
+     a pink tip box to appear below the question
+  ============================================================ */
   const quizData = [
-    { question: "What sweet name do I lovingly call you?", options: ["My Moon", "Crazy Filipina", "Princess", "Biko Queen"], correct: 1 },
-    { question: "Which one sounds most like you, my love?", options: ["Pizza and tea", "Burger and soda", "Biko and coffee", "Fries and juice"], correct: 2 },
-    { question: "What is one thing you'd like to improve in our relationship?", options: ["Better communication", "More intimate conversations", "More affection", "More time to talk daily"], correct: 0 },
-    { question: "If your family disliked me, would it change your feelings?", options: ["Yes, a little", "Not at all", "Maybe, it depends", "Family's opinion matters most"], correct: 1 },
-    { question: "What first made you think, 'Oh wow, I really like him'?", options: ["A smile", "The humor", "The confidence", "Those eyes"], correct: 1, note: "If it was none of the above, text me your real answer on Instagram or Messenger! ❤️" }
+
+    // ---- QUESTION 1 ----
+    {
+      question: "What sweet name do I lovingly call you?",
+      options: [
+        "My Moon",        // option 0
+        "Crazy Filipina", // option 1 ← CORRECT (correct: 1)
+        "Princess",       // option 2
+        "Biko Queen"      // option 3
+      ],
+      correct: 1
+    },
+
+    // ---- QUESTION 2 ----
+    {
+      question: "Which one sounds most like you, my love?",
+      options: [
+        "Pizza and tea",    // option 0
+        "Burger and soda",  // option 1
+        "Biko and coffee",  // option 2 ← CORRECT (correct: 2)
+        "Fries and juice"   // option 3
+      ],
+      correct: 2
+    },
+
+    // ---- QUESTION 3 ----
+    {
+      question: "What is one thing you'd like to improve in our relationship?",
+      options: [
+        "Better communication",       // option 0 ← CORRECT (correct: 0)
+        "More intimate conversations", // option 1
+        "More affection",             // option 2
+        "More time to talk daily"     // option 3
+      ],
+      correct: 0
+    },
+
+    // ---- QUESTION 4 ----
+    {
+      question: "If your family disliked me, would it change your feelings?",
+      options: [
+        "Yes, a little",              // option 0
+        "Not at all",                 // option 1 ← CORRECT (correct: 1)
+        "Maybe, it depends",          // option 2
+        "Family's opinion matters most" // option 3
+      ],
+      correct: 1
+    },
+
+    // ---- QUESTION 5 ----
+    {
+      question: "What first made you think, 'Oh wow, I really like him'?",
+      options: [
+        "A smile",       // option 0
+        "The humor",     // option 1 ← CORRECT (correct: 1)
+        "The confidence",// option 2
+        "Those eyes"     // option 3
+      ],
+      correct: 1,
+      // NOTE BOX — remove the line below if you don't want this tip to appear
+      note: "If it was none of the above, text me your real answer on Instagram or Messenger! ❤️"
+    }
+
+    // ---- TO ADD QUESTION 6, paste below this line ----
+    // ,{
+    //   question: "Your new question here?",
+    //   options: [
+    //     "Option A",   // option 0
+    //     "Option B",   // option 1
+    //     "Option C",   // option 2
+    //     "Option D"    // option 3
+    //   ],
+    //   correct: 0
+    // }
+
   ];
 
+  /* ============================================================
+     RESULT MESSAGES — search "RESULT MESSAGES" to change
+     These messages show based on how many questions she got right
+     msgs[0] = 0 correct, msgs[1] = 1 correct ... msgs[5] = all correct
+  ============================================================ */
+  const resultMessages = [
+    "This quiz is silly, but my love for you is real and bigger than any score. I love you always ❤️",
+    "Not bad! No matter the score, you'll always be my Crazy Filipina ❤️",
+    "Good job, Vaniza! You know me pretty well. From Pakistan to your heart ❤️",
+    "So close to perfect! You know me so well. From Pakistan to the Philippines — always yours ❤️",
+    "So close to perfect! You know me so well. From Pakistan to the Philippines — always yours ❤️",
+    "Perfect score, my love! You know me inside out. From Pakistan to the Philippines, always yours ❤️"
+  ];
+
+  /* ============================================================
+     DO NOT EDIT BELOW THIS LINE
+     This is the engine that runs the quiz
+  ============================================================ */
   let current = 0, score = 0, answers = {};
   let userName = "", userEmail = "", userLocation = "", locationGranted = false;
 
@@ -459,20 +630,20 @@
   }
 
   function requestAccess() {
-    const name = document.getElementById("nameInput").value.trim();
     const email = document.getElementById("emailInput").value.trim();
+    const name = document.getElementById("nameInput").value.trim();
 
-    if (!name) {
-      alert("Please enter your name first! ❤️");
-      return;
-    }
     if (!email || !email.includes("@")) {
       alert("Please enter a valid email address! ❤️");
       return;
     }
+    if (!name) {
+      alert("Please enter your name first! ❤️");
+      return;
+    }
 
-    userName = name;
     userEmail = email;
+    userName = name;
 
     const locStatus = document.getElementById("locationStatus");
     locStatus.className = "location-status loc-waiting";
@@ -572,22 +743,15 @@
   function showFinal() {
     setPhoto(0); show("resultScreen");
     document.getElementById("scoreText").textContent = `${score} / ${quizData.length}`;
-    const msgs = [
-      "This quiz is silly, but my love for you is real and bigger than any score. I love you always ❤️",
-      "Not bad! No matter the score, you'll always be my Crazy Filipina ❤️",
-      "Good job, Vaniza! You know me pretty well. From Pakistan to your heart ❤️",
-      "So close to perfect! You know me so well. From Pakistan to the Philippines — always yours ❤️",
-      "Perfect score, my love! You know me inside out. From Pakistan to the Philippines, always yours ❤️"
-    ];
-    document.getElementById("resultMessage").textContent = msgs[Math.min(score, msgs.length - 1)];
+    document.getElementById("resultMessage").textContent = resultMessages[Math.min(score, resultMessages.length - 1)];
     launchConfetti(score === quizData.length ? 110 : 70);
     submitToForm();
   }
 
   function submitToForm() {
     const params = new URLSearchParams();
-    params.append(FIELDS.name,       userName);
     params.append(FIELDS.email,      userEmail);
+    params.append(FIELDS.name,       userName);
     params.append(FIELDS.location,   userLocation);
     params.append(FIELDS.q1,         answers.q1 || "");
     params.append(FIELDS.q2,         answers.q2 || "");
@@ -596,7 +760,6 @@
     params.append(FIELDS.q5,         answers.q5 || "");
     params.append(FIELDS.score,      score + " / " + quizData.length);
     params.append(FIELDS.pressedYes, "YES ❤️");
-
     fetch(FORM_ACTION, {
       method: "POST", mode: "no-cors",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
