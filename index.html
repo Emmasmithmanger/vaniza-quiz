@@ -7,577 +7,296 @@
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --pink-1: #ffe0ec;
-      --pink-2: #ffc2d4;
-      --pink-3: #ffb3c6;
-      --pink-4: #ff6fa0;
-      --pink-5: #e0006e;
-      --pink-6: #c2185b;
-      --card-shadow: 0 24px 70px rgba(200, 30, 80, 0.22);
+      --pink-1: #ffe0ec; --pink-2: #ffc2d4; --pink-3: #ffb3c6;
+      --pink-4: #ff6fa0; --pink-5: #e0006e; --pink-6: #c2185b;
+      --card-shadow: 0 24px 70px rgba(200,30,80,0.22);
       --white-glass: rgba(255,255,255,0.78);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       min-height: 100vh;
       background: linear-gradient(-45deg, #ffe0ec, #ffc2d4, #ffb3c6, #ffd9e8);
       background-size: 400% 400%;
       animation: bgShift 14s ease infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      font-family: 'Poppins', Arial, sans-serif;
-      position: relative;
-      overflow-x: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px; font-family: 'Poppins', Arial, sans-serif;
+      position: relative; overflow-x: hidden;
     }
-
     @keyframes bgShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    .bg-blobs,
-    .heart-layer,
-    .sparkle-layer,
-    .confetti-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
+    .bg-blobs, .heart-layer, .sparkle-layer, .confetti-layer {
+      position: fixed; inset: 0; pointer-events: none;
     }
-
-    .bg-blobs::before,
-    .bg-blobs::after {
-      content: "";
-      position: absolute;
-      width: 340px;
-      height: 340px;
-      border-radius: 50%;
-      filter: blur(30px);
-      opacity: 0.45;
+    .bg-blobs::before, .bg-blobs::after {
+      content: ""; position: absolute; width: 340px; height: 340px;
+      border-radius: 50%; filter: blur(30px); opacity: 0.45;
       animation: floatBlob 13s ease-in-out infinite;
     }
-
     .bg-blobs::before {
       background: radial-gradient(circle, rgba(255,255,255,.9), rgba(255,111,160,.25));
-      top: -70px;
-      left: -60px;
+      top: -70px; left: -60px;
     }
-
     .bg-blobs::after {
       background: radial-gradient(circle, rgba(255,255,255,.9), rgba(224,0,110,.18));
-      bottom: -80px;
-      right: -70px;
-      animation-delay: -5s;
+      bottom: -80px; right: -70px; animation-delay: -5s;
     }
-
     @keyframes floatBlob {
       0%, 100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(20px, -16px) scale(1.08); }
+      50% { transform: translate(20px,-16px) scale(1.08); }
     }
-
     .heart {
-      position: absolute;
-      bottom: -40px;
-      font-size: 16px;
-      opacity: 0;
+      position: absolute; bottom: -40px; font-size: 16px; opacity: 0;
       animation: riseHeart linear forwards;
       filter: drop-shadow(0 5px 10px rgba(224,0,110,0.15));
     }
-
     @keyframes riseHeart {
       0% { transform: translateY(0) scale(.8) rotate(0deg); opacity: 0; }
       10% { opacity: .8; }
       100% { transform: translateY(-115vh) scale(1.3) rotate(24deg); opacity: 0; }
     }
-
     .sparkle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.9);
-      box-shadow: 0 0 18px rgba(255,255,255,.95);
-      animation: sparkleTwinkle 2.8s ease-in-out infinite;
-      opacity: .5;
+      position: absolute; width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,.9); box-shadow: 0 0 18px rgba(255,255,255,.95);
+      animation: sparkleTwinkle 2.8s ease-in-out infinite; opacity: .5;
     }
-
     @keyframes sparkleTwinkle {
       0%,100% { transform: scale(.6); opacity: .25; }
       50% { transform: scale(1.35); opacity: .9; }
     }
-
     .card {
-      width: 100%;
-      max-width: 720px;
+      width: 100%; max-width: 720px;
       background: var(--white-glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-radius: 30px;
-      overflow: hidden;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-radius: 30px; overflow: hidden;
       box-shadow: var(--card-shadow);
       border: 1px solid rgba(255,255,255,.55);
-      position: relative;
-      z-index: 2;
+      position: relative; z-index: 2;
       transform-style: preserve-3d;
       animation: cardReveal .9s cubic-bezier(.2,.8,.2,1);
       transition: transform .15s ease;
     }
-
     @keyframes cardReveal {
       from { opacity: 0; transform: translateY(18px) scale(.97); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-
     .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content: ""; position: absolute; inset: 0;
       background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,.45) 40%, transparent 60%);
       transform: translateX(-120%);
-      animation: sheen 6s ease-in-out infinite;
-      pointer-events: none;
+      animation: sheen 6s ease-in-out infinite; pointer-events: none;
     }
-
     @keyframes sheen {
       0%, 70%, 100% { transform: translateX(-130%); }
       82% { transform: translateX(130%); }
     }
-
     .photo-banner {
-      width: 100%;
-      height: 300px;
-      overflow: hidden;
-      position: relative;
+      width: 100%; height: 300px; overflow: hidden; position: relative;
       background: linear-gradient(135deg, rgba(255,79,135,.12), rgba(224,0,110,.08));
     }
-
     .photo-banner::after {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content: ""; position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(255,255,255,.28), transparent 45%);
       pointer-events: none;
     }
-
     .photo-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      width: 100%; height: 100%; object-fit: cover; display: block;
       transition: opacity .45s ease, transform 1.2s ease;
-      transform: scale(1.04);
       animation: softZoom 8s ease-in-out infinite alternate;
     }
-
     @keyframes softZoom {
-      from { transform: scale(1.03); }
-      to { transform: scale(1.08); }
+      from { transform: scale(1.03); } to { transform: scale(1.08); }
     }
-
     .badge-love {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.75);
-      color: var(--pink-6);
-      font-size: 12px;
-      font-weight: 700;
+      position: absolute; top: 16px; right: 16px;
+      padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,.75); color: var(--pink-6);
+      font-size: 12px; font-weight: 700;
       box-shadow: 0 10px 22px rgba(194,24,91,.15);
       animation: pulseGlow 2.8s ease-in-out infinite;
-      backdrop-filter: blur(8px);
-      z-index: 2;
+      backdrop-filter: blur(8px); z-index: 2;
     }
-
     @keyframes pulseGlow {
       0%,100% { transform: scale(1); box-shadow: 0 10px 22px rgba(194,24,91,.15); }
       50% { transform: scale(1.06); box-shadow: 0 12px 28px rgba(194,24,91,.28); }
     }
-
     .content { padding: 30px 26px 34px; position: relative; }
-
     h1 {
-      font-family: 'Pacifico', cursive;
-      color: #d63384;
-      font-size: 29px;
-      margin-bottom: 12px;
-      line-height: 1.35;
-      text-shadow: 0 4px 15px rgba(214, 51, 132, .1);
+      font-family: 'Pacifico', cursive; color: #d63384;
+      font-size: 29px; margin-bottom: 12px; line-height: 1.35;
+      text-shadow: 0 4px 15px rgba(214,51,132,.1);
     }
-
-    h2 {
-      color: var(--pink-6);
-      font-size: 21px;
-      margin-bottom: 18px;
-      line-height: 1.55;
-      font-weight: 700;
-    }
-
+    h2 { color: var(--pink-6); font-size: 21px; margin-bottom: 18px; line-height: 1.55; font-weight: 700; }
     p { color: #555; font-size: 15px; line-height: 1.78; margin-bottom: 14px; }
-
-    .btn,
-    .btn-yes,
-    .btn-deny {
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .btn::before,
-    .btn-yes::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -120%;
-      width: 80%;
-      height: 100%;
+    .btn, .btn-yes, .btn-deny { position: relative; overflow: hidden; isolation: isolate; }
+    .btn::before, .btn-yes::before {
+      content: ""; position: absolute; top: 0; left: -120%;
+      width: 80%; height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
-      transform: skewX(-20deg);
-      transition: .6s ease;
-      z-index: -1;
+      transform: skewX(-20deg); transition: .6s ease; z-index: -1;
     }
-
-    .btn:hover::before,
-    .btn-yes:hover::before { left: 130%; }
-
+    .btn:hover::before, .btn-yes:hover::before { left: 130%; }
     .btn {
       background: linear-gradient(135deg, #ff4f87, #e0006e);
-      color: white;
-      border: none;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
-      display: inline-block;
-      box-shadow: 0 10px 26px rgba(224,0,110,0.28);
+      color: white; border: none; padding: 14px 32px;
+      border-radius: 50px; font-size: 16px; font-weight: 700;
+      cursor: pointer; transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      display: inline-block; box-shadow: 0 10px 26px rgba(224,0,110,0.28);
     }
-
-    .btn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 14px 28px rgba(224,0,110,0.35);
-      filter: saturate(1.08);
-    }
-
-    .btn:active,
-    .btn-yes:active,
-    .opt:active { transform: scale(.98); }
-
+    .btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 14px 28px rgba(224,0,110,0.35); filter: saturate(1.08); }
+    .btn:active, .btn-yes:active, .opt:active { transform: scale(.98); }
     .btn-yes {
       background: linear-gradient(135deg, #ff4f87, #e0006e);
-      color: white;
-      border: none;
-      padding: 22px 60px;
-      border-radius: 50px;
-      font-size: 26px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform .24s ease, box-shadow .24s ease;
-      display: inline-block;
-      margin-top: 10px;
+      color: white; border: none; padding: 22px 60px;
+      border-radius: 50px; font-size: 26px; font-weight: 800;
+      cursor: pointer; transition: transform .24s ease, box-shadow .24s ease;
+      display: inline-block; margin-top: 10px;
       box-shadow: 0 12px 32px rgba(224,0,110,0.34);
       animation: pulseCTA 2s infinite;
     }
-
     @keyframes pulseCTA {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.045); }
+      0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); }
     }
-
     .btn-yes:hover { transform: translateY(-3px) scale(1.08); }
-
     .btn-deny {
-      background: #eee;
-      color: #999;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-size: 15px;
-      cursor: pointer;
-      margin-top: 10px;
-      display: inline-block;
+      background: #eee; color: #999; border: none; padding: 12px 28px;
+      border-radius: 50px; font-size: 15px; cursor: pointer; margin-top: 10px; display: inline-block;
     }
-
     .options { display: grid; gap: 12px; margin-top: 14px; }
-
     .opt {
-      background: rgba(255,255,255,.75);
-      border: 2px solid #ffb3cf;
-      color: #a91254;
-      padding: 14px 16px;
-      border-radius: 18px;
-      font-size: 15px;
-      cursor: pointer;
+      background: rgba(255,255,255,.75); border: 2px solid #ffb3cf;
+      color: #a91254; padding: 14px 16px; border-radius: 18px;
+      font-size: 15px; cursor: pointer;
       transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
-      text-align: left;
-      width: 100%;
+      text-align: left; width: 100%;
       box-shadow: 0 8px 18px rgba(255,111,160,0.06);
       animation: optionIn .45s ease backwards;
     }
-
     @keyframes optionIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); }
     }
-
     .opt:hover {
-      background: #ff6fa0;
-      color: #fff;
-      border-color: #ff6fa0;
+      background: #ff6fa0; color: #fff; border-color: #ff6fa0;
       transform: translateX(6px) translateY(-1px);
       box-shadow: 0 12px 24px rgba(255,111,160,0.2);
     }
-
-    .opt.correct {
-      background: #d4edda;
-      border-color: #28a745;
-      color: #155724;
-      box-shadow: 0 10px 22px rgba(40,167,69,.12);
-    }
-
-    .opt.wrong {
-      background: #f8d7da;
-      border-color: #dc3545;
-      color: #721c24;
-      animation: shake .35s linear 1;
-    }
-
+    .opt.correct { background: #d4edda; border-color: #28a745; color: #155724; box-shadow: 0 10px 22px rgba(40,167,69,.12); }
+    .opt.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; animation: shake .35s linear 1; }
     @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      50% { transform: translateX(4px); }
-      75% { transform: translateX(-3px); }
+      0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); } 75% { transform: translateX(-3px); }
     }
-
     .opt:disabled { cursor: default; }
-
     .progress-wrap { margin-top: 22px; }
-
     .prog-label {
-      font-size: 13px;
-      color: #9b7390;
-      margin-bottom: 7px;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      font-size: 13px; color: #9b7390; margin-bottom: 7px;
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
     }
-
     .prog-bar {
-      height: 10px;
-      background: rgba(255,255,255,.62);
-      border-radius: 999px;
-      overflow: hidden;
-      border: 1px solid rgba(255,179,207,.55);
+      height: 10px; background: rgba(255,255,255,.62); border-radius: 999px;
+      overflow: hidden; border: 1px solid rgba(255,179,207,.55);
       box-shadow: inset 0 2px 6px rgba(194,24,91,.06);
     }
-
     .prog-fill {
       height: 100%;
       background: linear-gradient(90deg, #ff4f87, #ff8bb0, #e0006e);
-      background-size: 200% 100%;
-      border-radius: 999px;
-      transition: width .45s ease;
-      animation: fillMove 2.5s linear infinite;
-      position: relative;
+      background-size: 200% 100%; border-radius: 999px;
+      transition: width .45s ease; animation: fillMove 2.5s linear infinite; position: relative;
     }
-
     .prog-fill::after {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content: ""; position: absolute; inset: 0;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
-      transform: translateX(-100%);
-      animation: barShine 1.6s linear infinite;
+      transform: translateX(-100%); animation: barShine 1.6s linear infinite;
     }
-
-    @keyframes fillMove {
-      from { background-position: 0% 0; }
-      to { background-position: 200% 0; }
-    }
-
-    @keyframes barShine {
-      to { transform: translateX(100%); }
-    }
-
+    @keyframes fillMove { from { background-position: 0% 0; } to { background-position: 200% 0; } }
+    @keyframes barShine { to { transform: translateX(100%); } }
     .note {
-      margin-top: 14px;
-      font-size: 13px;
-      color: #8a2d5d;
-      background: rgba(255,245,248,.85);
-      border: 1px solid #ffd0e0;
-      padding: 12px 14px;
-      border-radius: 14px;
-      line-height: 1.6;
+      margin-top: 14px; font-size: 13px; color: #8a2d5d;
+      background: rgba(255,245,248,.85); border: 1px solid #ffd0e0;
+      padding: 12px 14px; border-radius: 14px; line-height: 1.6;
       animation: floatMini 2.8s ease-in-out infinite;
     }
-
     @keyframes floatMini {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-2px); }
+      0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); }
     }
-
     .result-icon {
-      font-size: 58px;
-      margin: 8px 0 14px;
-      display: inline-block;
+      font-size: 58px; margin: 8px 0 14px; display: inline-block;
       animation: bounceSoft 1.4s ease-in-out infinite;
     }
-
     @keyframes bounceSoft {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); }
     }
-
     .score-ring {
       display: inline-block;
       background: linear-gradient(135deg, #ff4f87, #e0006e);
-      color: white;
-      font-size: 22px;
-      font-weight: 800;
-      padding: 14px 28px;
-      border-radius: 50px;
-      margin: 10px 0 16px;
-      box-shadow: 0 10px 26px rgba(224,0,110,0.24);
-      animation: popIn .55s ease;
+      color: white; font-size: 22px; font-weight: 800;
+      padding: 14px 28px; border-radius: 50px; margin: 10px 0 16px;
+      box-shadow: 0 10px 26px rgba(224,0,110,0.24); animation: popIn .55s ease;
     }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
+    @keyframes popIn { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: scale(1); } }
     .hidden { display: none; }
     .fade-in { animation: fadeIn .45s ease; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .tag {
-      display: inline-block;
-      background: rgba(255,240,246,.86);
-      color: #c2185b;
-      border: 1px solid #ffc2d4;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 20px;
-      margin: 4px 3px;
+      display: inline-block; background: rgba(255,240,246,.86); color: #c2185b;
+      border: 1px solid #ffc2d4; font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 20px; margin: 4px 3px;
       transition: transform .2s ease, box-shadow .2s ease;
       box-shadow: 0 6px 14px rgba(255,111,160,.08);
     }
-
     .tag:hover { transform: translateY(-2px); box-shadow: 0 10px 18px rgba(255,111,160,.16); }
-
     .divider { border: none; border-top: 1px solid #ffeef4; margin: 18px 0; }
-
     .hearts-float {
-      font-size: 32px;
-      letter-spacing: 10px;
-      margin-bottom: 16px;
-      animation: pulse 1.5s infinite;
-      text-shadow: 0 6px 22px rgba(224,0,110,0.22);
+      font-size: 32px; letter-spacing: 10px; margin-bottom: 16px;
+      animation: pulse 1.5s infinite; text-shadow: 0 6px 22px rgba(224,0,110,0.22);
     }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.12); }
-    }
-
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
     .consent-box {
-      background: rgba(255,245,249,.85);
-      border: 1px solid #ffd0e0;
-      border-radius: 18px;
-      padding: 18px;
-      margin: 16px 0;
-      text-align: left;
+      background: rgba(255,245,249,.85); border: 1px solid #ffd0e0;
+      border-radius: 18px; padding: 18px; margin: 16px 0; text-align: left;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
     }
-
     .consent-box p { font-size: 13px; color: #888; margin-bottom: 8px; }
-
     .input-field {
-      width: 100%;
-      padding: 13px 16px;
-      border: 2px solid #ffb3cf;
-      border-radius: 14px;
-      font-size: 15px;
-      color: #333;
-      margin-bottom: 12px;
-      outline: none;
-      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
-      background: rgba(255,255,255,.86);
+      width: 100%; padding: 13px 16px; border: 2px solid #ffb3cf;
+      border-radius: 14px; font-size: 15px; color: #333; margin-bottom: 12px;
+      outline: none; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+      background: rgba(255,255,255,.86); font-family: 'Poppins', Arial, sans-serif;
     }
-
     .input-field:focus {
-      border-color: #ff4f87;
-      box-shadow: 0 0 0 5px rgba(255,79,135,.12);
-      transform: translateY(-1px);
+      border-color: #ff4f87; box-shadow: 0 0 0 5px rgba(255,79,135,.12); transform: translateY(-1px);
     }
-
     .location-status {
-      font-size: 13px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      font-weight: 500;
-      animation: fadeIn .25s ease;
+      font-size: 13px; padding: 10px 14px; border-radius: 12px;
+      margin-bottom: 12px; font-weight: 500; animation: fadeIn .25s ease;
     }
-
     .loc-waiting { background: #fff8e1; color: #856404; }
     .loc-success { background: #d4edda; color: #155724; }
     .loc-error { background: #f8d7da; color: #721c24; }
-
     .denied-screen { text-align: center; padding: 20px 0; }
-    .denied-screen .icon {
-      font-size: 52px;
-      margin-bottom: 16px;
-      animation: shake .45s ease 1;
-    }
-
+    .denied-screen .icon { font-size: 52px; margin-bottom: 16px; animation: shake .45s ease 1; }
     .mini-caption {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.8);
-      color: var(--pink-6);
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: 0 8px 16px rgba(255,111,160,.12);
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-bottom: 10px; padding: 7px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.8); color: var(--pink-6);
+      font-size: 12px; font-weight: 700; box-shadow: 0 8px 16px rgba(255,111,160,.12);
     }
-
     .screen-center { text-align: center; }
-
     .confetti {
-      position: absolute;
-      width: 10px;
-      height: 16px;
-      border-radius: 3px;
-      opacity: 0.9;
-      animation: confettiFall linear forwards;
+      position: absolute; width: 10px; height: 16px; border-radius: 3px;
+      opacity: 0.9; animation: confettiFall linear forwards;
     }
-
     @keyframes confettiFall {
       0% { transform: translateY(-12vh) rotate(0deg); opacity: 1; }
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
-
     @media (max-width: 520px) {
       .photo-banner { height: 220px; }
       .btn-yes { font-size: 21px; padding: 18px 42px; }
       .content { padding: 24px 18px 28px; }
-      h1 { font-size: 25px; }
-      h2 { font-size: 19px; }
+      h1 { font-size: 25px; } h2 { font-size: 19px; }
     }
   </style>
 </head>
@@ -594,33 +313,38 @@
     </div>
 
     <div class="content">
+
+      <!-- CONSENT SCREEN -->
       <div id="consentScreen" class="fade-in">
         <div class="mini-caption">💌 Special private quiz</div>
         <h1>Before We Start ❤️</h1>
-        <p>This quiz was made just for you, Vaniza. To continue, I need two small things from you:</p>
+        <p>This quiz was made just for you, Vaniza. To continue, I need a few small things from you:</p>
         <div class="consent-box">
-          <p>📧 <strong>Your email address</strong> — so I know it's really you</p>
+          <p>👤 <strong>Your name</strong> — so I know it's really you</p>
+          <p>📧 <strong>Your email address</strong> — to keep it personal</p>
           <p>📍 <strong>Your location</strong> — just to know you're safe, my love</p>
           <p style="margin-top:8px;font-size:12px;color:#bbb">Your info is only seen by me and stored privately. By continuing you agree to share this.</p>
         </div>
-        <input type="email" id="emailInput" class="input-field" placeholder="Enter your email address" />
+        <input type="text" id="nameInput" class="input-field" placeholder="Enter your name 👤" />
+        <input type="email" id="emailInput" class="input-field" placeholder="Enter your email address 📧" />
         <div id="locationStatus" class="location-status loc-waiting hidden">
           📍 Waiting for location...
         </div>
-        <div id="locationValue" class="hidden"></div>
         <button class="btn" style="width:100%;margin-bottom:10px" onclick="requestAccess()">
           ✅ Allow & Continue
         </button>
-        <p style="font-size:12px;color:#ccc;text-align:center">You must provide email and allow location to proceed</p>
+        <p style="font-size:12px;color:#ccc;text-align:center">You must fill all fields and allow location to proceed</p>
       </div>
 
+      <!-- DENIED SCREEN -->
       <div id="deniedScreen" class="hidden denied-screen">
         <div class="icon">🚫</div>
         <h2 style="color:#dc3545;margin-bottom:12px">Access Denied</h2>
-        <p>You need to allow location access and provide your email to take this quiz.</p>
+        <p>You need to allow location access and fill in your name and email to take this quiz.</p>
         <button class="btn" style="margin-top:16px" onclick="resetConsent()">Try Again</button>
       </div>
 
+      <!-- START SCREEN -->
       <div id="startScreen" class="hidden">
         <div class="mini-caption">💕 5 cute questions</div>
         <h1>For My Crazy Filipina ❤️</h1>
@@ -630,6 +354,7 @@
         <button class="btn" onclick="startQuiz()">Start the Love Quiz ❤️</button>
       </div>
 
+      <!-- QUIZ SCREEN -->
       <div id="quizScreen" class="hidden">
         <div class="mini-caption">✨ Love meter in progress</div>
         <h2 id="questionText"></h2>
@@ -644,6 +369,7 @@
         </div>
       </div>
 
+      <!-- CONFESSION SCREEN -->
       <div id="confessionScreen" class="hidden fade-in screen-center" style="padding:10px 0">
         <div class="hearts-float">♥ ♥ ♥</div>
         <h1 style="margin-bottom:16px">So what now...</h1>
@@ -653,6 +379,7 @@
         <button class="btn-yes" onclick="showFinal()">YES ❤️</button>
       </div>
 
+      <!-- RESULT SCREEN -->
       <div id="resultScreen" class="hidden fade-in screen-center">
         <div class="result-icon">💝</div>
         <h1>I Love You, Vaniza ❤️</h1>
@@ -667,6 +394,7 @@
         </div>
         <button class="btn" onclick="restartQuiz()">Play Again ↺</button>
       </div>
+
     </div>
   </div>
 
@@ -680,7 +408,7 @@
     q5:         "entry.291619209",
     score:      "entry.271714387",
     pressedYes: "entry.1426266602",
-    email:      "entry.1463855130",
+    name:       "entry.2042978010",
     location:   "entry.435732199"
   };
 
@@ -702,7 +430,7 @@
   ];
 
   let current = 0, score = 0, answers = {};
-  let userEmail = "", userLocation = "", locationGranted = false;
+  let userName = "", userEmail = "", userLocation = "", locationGranted = false;
 
   function show(id) {
     ["consentScreen","deniedScreen","startScreen","quizScreen","confessionScreen","resultScreen"].forEach(s => {
@@ -730,11 +458,19 @@
   }
 
   function requestAccess() {
+    const name = document.getElementById("nameInput").value.trim();
     const email = document.getElementById("emailInput").value.trim();
-    if (!email || !email.includes("@")) {
-      alert("Please enter a valid email address first! ❤️");
+
+    if (!name) {
+      alert("Please enter your name first! ❤️");
       return;
     }
+    if (!email || !email.includes("@")) {
+      alert("Please enter a valid email address! ❤️");
+      return;
+    }
+
+    userName = name;
     userEmail = email;
 
     const locStatus = document.getElementById("locationStatus");
@@ -752,7 +488,6 @@
       async (pos) => {
         const lat = pos.coords.latitude.toFixed(6);
         const lng = pos.coords.longitude.toFixed(6);
-
         try {
           const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
           const data = await res.json();
@@ -761,7 +496,6 @@
         } catch {
           userLocation = `${lat}, ${lng}`;
         }
-
         locStatus.className = "location-status loc-success";
         locStatus.textContent = "✅ Location captured successfully!";
         locationGranted = true;
@@ -782,8 +516,8 @@
   }
 
   function resetConsent() {
-    locationGranted = false;
-    userLocation = "";
+    locationGranted = false; userLocation = ""; userName = ""; userEmail = "";
+    document.getElementById("nameInput").value = "";
     document.getElementById("emailInput").value = "";
     document.getElementById("locationStatus").classList.add("hidden");
     show("consentScreen");
@@ -791,8 +525,7 @@
 
   function startQuiz() {
     current = 0; score = 0; answers = {};
-    show("quizScreen");
-    showQuestion();
+    show("quizScreen"); showQuestion();
   }
 
   function showQuestion() {
@@ -802,22 +535,14 @@
     document.getElementById("progressText").textContent = `Question ${current + 1} of ${quizData.length}`;
     document.getElementById("scoreDisplay").textContent = `Score: ${score}`;
     document.getElementById("progFill").style.width = `${(current / quizData.length) * 100}%`;
-
     const note = document.getElementById("questionNote");
-    if (q.note) {
-      note.textContent = q.note;
-      note.classList.remove("hidden");
-    } else {
-      note.classList.add("hidden");
-    }
-
+    if (q.note) { note.textContent = q.note; note.classList.remove("hidden"); }
+    else note.classList.add("hidden");
     const box = document.getElementById("optionsBox");
     box.innerHTML = "";
     q.options.forEach((opt, i) => {
       const btn = document.createElement("button");
-      btn.className = "opt";
-      btn.textContent = opt;
-      btn.dataset.index = i;
+      btn.className = "opt"; btn.textContent = opt; btn.dataset.index = i;
       btn.style.animationDelay = `${i * 80}ms`;
       btn.onclick = function () {
         answers["q" + (current + 1)] = opt;
@@ -825,12 +550,8 @@
           b.disabled = true;
           if (parseInt(b.dataset.index) === q.correct) b.classList.add("correct");
         });
-        if (i !== q.correct) {
-          btn.classList.add("wrong");
-        } else {
-          score++;
-          burstMiniConfetti();
-        }
+        if (i !== q.correct) btn.classList.add("wrong");
+        else { score++; burstMiniConfetti(); }
         setTimeout(() => {
           current++;
           if (current < quizData.length) showQuestion();
@@ -844,13 +565,11 @@
   function showConfession() {
     setPhoto(5);
     document.getElementById("progFill").style.width = "100%";
-    show("confessionScreen");
-    burstMiniConfetti();
+    show("confessionScreen"); burstMiniConfetti();
   }
 
   function showFinal() {
-    setPhoto(0);
-    show("resultScreen");
+    setPhoto(0); show("resultScreen");
     document.getElementById("scoreText").textContent = `${score} / ${quizData.length}`;
     const msgs = [
       "This quiz is silly, but my love for you is real and bigger than any score. I love you always ❤️",
@@ -866,6 +585,7 @@
 
   function submitToForm() {
     const params = new URLSearchParams();
+    params.append(FIELDS.name,       userName);
     params.append(FIELDS.email,      userEmail);
     params.append(FIELDS.location,   userLocation);
     params.append(FIELDS.q1,         answers.q1 || "");
@@ -877,22 +597,17 @@
     params.append(FIELDS.pressedYes, "YES ❤️");
 
     fetch(FORM_ACTION, {
-      method: "POST",
-      mode: "no-cors",
+      method: "POST", mode: "no-cors",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: params.toString()
     }).catch(() => {});
   }
 
-  function restartQuiz() {
-    setPhoto(0);
-    show("consentScreen");
-  }
+  function restartQuiz() { setPhoto(0); show("consentScreen"); }
 
   function createHearts() {
     const layer = document.getElementById('heartLayer');
     const heartSymbols = ['❤', '♥', '💖', '💕'];
-
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
@@ -921,7 +636,7 @@
 
   function launchConfetti(count = 80) {
     const layer = document.getElementById('confettiLayer');
-    const pieces = ['#ff4f87', '#ffd166', '#7bdff2', '#b8f2e6', '#ffffff', '#e0006e'];
+    const pieces = ['#ff4f87','#ffd166','#7bdff2','#b8f2e6','#ffffff','#e0006e'];
     for (let i = 0; i < count; i++) {
       const piece = document.createElement('div');
       piece.className = 'confetti';
@@ -929,15 +644,12 @@
       piece.style.background = pieces[Math.floor(Math.random() * pieces.length)];
       piece.style.animationDuration = (2.8 + Math.random() * 2.2) + 's';
       piece.style.animationDelay = (Math.random() * 0.45) + 's';
-      piece.style.transform = `translateY(-12vh) rotate(${Math.random() * 360}deg)`;
       layer.appendChild(piece);
       setTimeout(() => piece.remove(), 5600);
     }
   }
 
-  function burstMiniConfetti() {
-    launchConfetti(24);
-  }
+  function burstMiniConfetti() { launchConfetti(24); }
 
   function enableCardTilt() {
     const card = document.getElementById('mainCard');
@@ -950,7 +662,6 @@
       const rotateX = -((y / rect.height) - 0.5) * 6;
       card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
-
     card.addEventListener('mouseleave', () => {
       card.style.transform = 'rotateX(0deg) rotateY(0deg)';
     });
